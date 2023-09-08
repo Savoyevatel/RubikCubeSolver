@@ -1,24 +1,12 @@
 import numpy as np
 import copy
 
-c = ''
+c = ''# C is a string based on yellow, blue, red, green, orange, white and is generated 9 times as the number of squares of each color
 for i in "ybrgow":
     if "ybrgow":
         for j in range(1,10):
             c = c + (f'{i}{j}')
 
-#string = c
-'''
-pairs = [string[i:i+2] for i in range(0, len(string), 2)]
-U,L,F,R,B,D=([list(pairs[9*i:9*i+9][j*3:j*3+3])for j in range(3)]for i in range(6))
-'''
-
-'''
-c=''.join(f'{x}{i}'*9 for x in'ybrgow' for i in range(2))
-print(c)
-U,L,F,R,B,D=([list(c[9*i:9*i+9][j*3:j*3+3])for j in range(3)]for i in range(6))
-print(U)
-'''
 def g(matrix):######rotate 90 degrees same as g
     matrix = np.array(matrix)
     matrix = (np.rot90(matrix)).tolist()
@@ -34,7 +22,7 @@ def ff(matrix):######rotate 180 degrees same as ff()
     matrix = (np.rot90(matrix,2)).tolist()
     return matrix
 
-def turnX(string):
+def turnX(string):##### Rotates the cube to the x direction based on https://ruwix.com/the-rubiks-cube/notation/
     pairs = [string[i:i + 2] for i in range(0, len(string), 2)]
     U, L, F, R, B, D = ([list(pairs[9 * i:9 * i + 9][j * 3:j * 3 + 3]) for j in range(3)] for i in range(6))
     (U, L, F, R, B, D) = (F, g(L), D, f(R), ff(U), ff(B))
