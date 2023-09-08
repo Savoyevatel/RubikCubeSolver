@@ -1,27 +1,48 @@
-import itertools
-import random
 import numpy as np
+import copy
+
+c = ''
+for i in "ybrgow":
+    if "ybrgow":
+        for j in range(1,10):
+            c = c + (f'{i}{j}')
+
+#string = c
+'''
+pairs = [string[i:i+2] for i in range(0, len(string), 2)]
+U,L,F,R,B,D=([list(pairs[9*i:9*i+9][j*3:j*3+3])for j in range(3)]for i in range(6))
+'''
 
 '''
-result = []
-for i in range(6):
-    result.extend([i] + list(x) for x in itertools.product(range(3), repeat = 2))
-print(result)
+c=''.join(f'{x}{i}'*9 for x in'ybrgow' for i in range(2))
+print(c)
+U,L,F,R,B,D=([list(c[9*i:9*i+9][j*3:j*3+3])for j in range(3)]for i in range(6))
+print(U)
 '''
-lst = [[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 0], [0, 1, 1], [0, 1, 2], [0, 2, 0], [0, 2, 1], [0, 2, 2]]
-cube = [[[i, *x[1:]] for x in lst] for i in range(0, 6)]
+def g(matrix):######rotate 90 degrees same as g
+    matrix = np.array(matrix)
+    matrix = (np.rot90(matrix)).tolist()
+    return matrix
 
-top, left, right, front, back, bottom = cube
+def f(matrix):######rotate -90 degrees same as f
+    matrix = np.array(matrix)
+    matrix = (np.rot90(matrix,-1)).tolist()
+    return matrix
 
-def turn_horizontal(face, direction, row):
-    if row == 1:
-        row = row[:3]
-        if direction == 0:#left
-            cube[1][:l], cube[2][:l], cube[3][:l], cube[4][:l] = cube[2][:l],cube[3][:l],cube[4][:l],cube[1][:l]
+def ff(matrix):######rotate 180 degrees same as ff()
+    matrix = np.array(matrix)
+    matrix = (np.rot90(matrix,2)).tolist()
+    return matrix
 
-        elif direction ==1: #right
-            cube[1][:l], cube[2][:l], cube[3][:l], cube[4][:l] = cube[4][:l], cube[1][:l], cube[2][:l], cube[3][:l]
-        else:
-            print("That's not an available position!")
-
-# = out[0]
+def turnX(string):
+    pairs = [string[i:i + 2] for i in range(0, len(string), 2)]
+    U, L, F, R, B, D = ([list(pairs[9 * i:9 * i + 9][j * 3:j * 3 + 3]) for j in range(3)] for i in range(6))
+    (U, L, F, R, B, D) = (F, g(L), D, f(R), ff(U), ff(B))
+    x = [U, L, F, R, B, D]
+    res = ''
+    for x in x:
+        if x:
+            for y in x:
+                res = res + "".join(y)
+    return res
+print(turnX(c))
